@@ -1,26 +1,24 @@
 //require('dotenv').load();
 
-var express = require("express");
+var express = require( 'express' );
 var router = express.Router();
 
-var knex = require("knex")({
-    client: "pg",
+var knex = require( 'knex' )({
+    client: 'pg',
     connection: 'postgres://monkey_admin@localhost/monkeydb'
 });
 
 // get all the monkeys
 router.get( '/', function( req, res ){
-  knex.select().from('monkeys')
+  knex.select().from( 'monkeys' )
       .then( function( monkeys ){
           res.status( 200 ).send({monkeys: monkeys});
   });
-  console.log('Get all the monkeys');
-  // res.render( 'monkeys', {greeting: 'Ohai!'} );
 });
 
 // get one monkey
-router.get('/:id', function( req, res ){
-    knex.select().from('monkeys')
+router.get( '/:id', function( req, res ){
+    knex.select().from( 'monkeys' )
         .where('id', req.params.id)
         .then(function( monkeys ){
             res.status( 200 ).send({monkeys: monkeys});
@@ -35,7 +33,19 @@ router.post( '/', function( req, res ){
         email: req.body.email
     }, 'id' ).then( function( id ){
         req.body.id = id[0];
-        res.status( 201 ).send( req.body );
+        res.status( 201 ).send( req.body ).redirect( 'http://localhost:8000/monkeys' );
+    });
+});
+
+// change a  monkey
+router.put( '/:id', function( req, res ){
+    knex( 'monkeys' ).insert({
+        name: req.body.name,
+        dob: req.body.dob,
+        email: req.body.email
+    }, 'id' ).then( function( id ){
+        req.body.id = id[0];
+        res.status( 201 ).send( req.body ).redirect( 'http://localhost:8000/monkeys' );
     });
 });
 
