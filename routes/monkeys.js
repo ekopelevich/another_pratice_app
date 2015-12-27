@@ -10,20 +10,20 @@ var knex = require("knex")({
 
 // get all the monkeys
 router.get( '/', function( req, res ){
-  knex( 'monkeys' ).select()
-      .where(' id', req.params.id )
+  knex.select().from('monkeys')
       .then( function( monkeys ){
-          res.status( 200 ).send( {monkeys: monkeys} );
+          res.status( 200 ).send({monkeys: monkeys});
   });
+  console.log('Get all the monkeys');
   // res.render( 'monkeys', {greeting: 'Ohai!'} );
 });
 
 // get one monkey
-router.get('/:id', function(request, response){
-    knex('monkeys').select()
-        .where('id', request.params.id)
-        .then(function(students){
-            response.status( 200 ).send({monkeys: monkeys});
+router.get('/:id', function( req, res ){
+    knex.select().from('monkeys')
+        .where('id', req.params.id)
+        .then(function( monkeys ){
+            res.status( 200 ).send({monkeys: monkeys});
     });
 });
 

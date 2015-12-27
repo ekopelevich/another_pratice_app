@@ -1,8 +1,0 @@
-extends layout  
-
-block content
-  h1 #{greeting}
-  form(action="/monkeys" method="post")
-    label(for="name") Name
-      input(type="text" name="name", id="name")
-    input(type="submit" value="create a new monkey")  
