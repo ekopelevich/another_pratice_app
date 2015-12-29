@@ -27,26 +27,15 @@ router.get( '/:id', function( req, res ){
 
 // create a new monkey
 router.post( '/', function( req, res ){
-    knex( 'monkeys' ).insert({
-        name: req.body.name,
-        dob: req.body.dob,
-        email: req.body.email
-    }, 'id' ).then( function( id ){
-        req.body.id = id[0];
-        res.status( 201 ).send( req.body ).redirect( 'http://localhost:8000/monkeys' );
-    });
-});
-
-// change a  monkey
-router.put( '/:id', function( req, res ){
-    knex( 'monkeys' ).insert({
-        name: req.body.name,
-        dob: req.body.dob,
-        email: req.body.email
-    }, 'id' ).then( function( id ){
-        req.body.id = id[0];
-        res.status( 201 ).send( req.body ).redirect( 'http://localhost:8000/monkeys' );
-    });
+  knex( 'monkeys' ).insert({
+    name: req.body.name,
+    dob: req.body.dob,
+    email: req.body.email
+  }, 'id' ).then( function( id ){
+    req.body.id = id[0];
+    res.status( 201 ).send( req.body );
+  });
+  console.log(req.body);
 });
 
 module.exports = router;
